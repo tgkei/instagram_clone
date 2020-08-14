@@ -1,30 +1,20 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './App.css';
 import Post from './Post.js';
+import {db} from './firebase';
 
 function App() {
-  const [posts, setPosts] = useState([
-    {
-      username: "tg",
-      caption: "Check1",
-      imageUrl: "https://images.unsplash.com/photo-1497515114629-f71d768fd07c?ixlib=rb-1.2.1&w=1000&q=80"
-    },
-    {
-      username: "kim",
-      caption: "check2",
-      imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/3D_medical_animation_corona_virus.jpg/800px-3D_medical_animation_corona_virus.jpg"
-    },
-    {
-      username: "test",
-      caption: "Pig",
-      imageUrl: "https://images-na.ssl-images-amazon.com/images/I/61WdixjupoL._AC_SX679_.jpg"
-    },
-    {
-      username: "who am i",
-      caption: "I'm kim",
-      imageUrl: "https://www.ie.edu/exponential-learning/blog/wp-content/uploads/2018/01/MachineLearninginMarketing-1621x1000.jpg"
-    }
-  ]);
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    db.collection('posts').onSnapshot(snapshot => {
+      setPosts(snapshot.docs.map(doc => ({
+        id: doc.id,
+        post: doc.data()
+      })))
+    })
+  }, [])
+
   return (
     <div className="app">
       <div className="app__header">
@@ -32,8 +22,8 @@ function App() {
       </div>
 
       {
-        posts.map(post => (
-          <Post username={post.username} caption={post.caption} imageUrl={post.imageUrl} />
+        posts.map(({id, post}) => (
+          <Post key={id} username={post.username} caption={post.caption} imageUrl={post.imageUrl} />
         )
         )
       }
