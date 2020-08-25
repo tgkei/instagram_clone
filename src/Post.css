@@ -13,7 +13,7 @@
 
 .post__text {
   font-weight: normal;
-  padding: 10px;
+  padding: 20px;
 }
 
 .post__header {
@@ -24,4 +24,27 @@
 
 .post__Avatar {
   margin-right: 10px;
+}
+
+.post__commentBox {
+  display: flex;
+  margin-top: 10px;
+}
+
+.post__comments {
+  padding : 20px;
+}
+.post__comment {
+  flex: 1;
+  border: none;
+  padding: 10px;
+  border-top: 1px solid lightgray;
+}
+
+.post__button {
+  flex: 0;
+  border: none;
+  color: #6082a3;
+  background-color: transparent;
+  border-top: 1px solid lightgray;
 }
